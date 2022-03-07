@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .block1 {
+            width: 100px;
+            height: 30px;
+            background-color: yellow;
+            position: absolute;
+            left : 50px;
+            margin-top : 10px;
+        }
+        .block2 {
+            width: 100px;
+            height: 30px;
+            background-color: yellow;
+            position: absolute;
+            left : 50px;
+            margin-top : 10px;
+        }
+        .block3 {
+            width: 100px;
+            height: 30px;
+            background-color: yellow;
+            position: absolute;
+            left : 50px;
+            margin-top : 10px;
+        }
+        .block4 {
+            width: 100px;
+            height: 30px;
+            background-color: yellow;
+            position: absolute;
+            left : 50px;
+            margin-top : 10px;
+        }
+    </style>
+</head>
+<body style="height : 1000px">
+<div style="width:400px; height:400px;background-color: #777;position: relative;" id="constainer">
+    <div id="block1" class="block1"></div>
+    <div id="block2" class="block2"></div>
+    <div id="block3" class="block3"></div>
+    <div id="block4" class="block4"></div>
+</div>
+<script>
+    /**
+     * 拖动元素
+     * @param elementId 元素id
+     */
+    function drag(elementId) {
+        var element = document.getElementById(elementId);
+        var position = {
+            elementX: 0,
+            elementY: 0,
+            mouseX: 0,
+            mouseY: 0,
+            state: 0
+        };
+        //获得兼容的event对象
+        function getEvent(event) {
+            return event || window.event;
+        }
+
+
+        function getMouse(e) {
+            var x = 0, y = 0;
+            e = e || window.event;
+            if (e.pageX) {
+                x = e.pageX;
+                y = e.pageY;
+            } else {
+                x = e.clientX + document.body.scrollLeft - document.body.clientLeft;
+                y = e.clientY + document.body.scrollTop - document.body.clientTop;
+            }
+            return {
+                x: x,
+                y: y
+            };
+        }
+        //元素被鼠标拖住
+        element.addEventListener('mousedown', function (event) {
+            //获得偏移的位置以及更改状态
+            var aaa = this;
+            var mouse = getMouse(event);
+            // position.mouseX = mouse.x;
+            // position.mouseY = mouse.y;
+            // position.elementX = element.offsetLeft;
+            // position.elementY = element.offsetTop;
+            position.state = 1;
+
+            //console.log(mouseXY.x  + "   " + mouseXY.y);
+        }, false);
+        //元素移动过程中
+        document.addEventListener('mousemove', function (event) {
+            var mouse = getMouse(event);
+            if (position.state) {
+                //设置绝对位置在文档中，鼠标当前位置-开始拖拽时的偏移位置
+                // var x = mouse.x - position.mouseX;
+                // var y = mouse.y - position.mouseY;
+                var parent = element.parentNode;
+                // if (position.elementX + x + element.offsetWidth <= parent.offsetLeft + parent.offsetWidth) {
+                //     element.style.left = position.elementX + x + 'px';
+                // } else {
+                //     element.style.left = parent.offsetLeft + parent.offsetWidth - element.offsetWidth + 'px';
+                // }
+                // element.style.top = position.elementY + y + 'px';
+
+                element.style.opacity = 0.3;
+
+                // parent.CSSStyleDeclaration.setProperty('cursor', 'move')
+                // element.style.cursor = 'move';
+                element.style.setProperty('cursor', 'move');
+
+                //console.log(e.clientY + "   " + element.offsetTop);
+            }
+        }, false);
+        //释放拖拽状态
+        document.addEventListener('mouseup', function (event) {
+            position.state = 0;
+            element.style.opacity = 1;
+            element.style.setProperty('cursor', 'default')
+        }, false);
+    }
+
+    // drag('block1');
+    // drag('block2');
+    // drag('block3');
+    // drag('block4');
+
+
+    drag('constainer')
+</script>
+</body>
+</html>
+
