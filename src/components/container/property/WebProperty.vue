@@ -30,14 +30,14 @@
             <!--<div v-if="is_edit&&scope.row.add==undefined" style="display: inline-block;">-->
             <!--&lt;!&ndash; 编辑 &ndash;&gt;-->
             <!--<el-button-->
-            <!--size="mini"-->
+            <!--size="small"-->
             <!--v-if="!scope.row.edit"-->
             <!--@click="handleEdit(scope.$index, scope.row)"-->
             <!--type="primary"-->
             <!--&gt;Edit</el-button>-->
             <!--&lt;!&ndash; 保存 &ndash;&gt;-->
             <!--<el-button-->
-            <!--size="mini"-->
+            <!--size="small"-->
             <!--type="success"-->
             <!--:plain="true"-->
             <!--v-if="scope.row.edit"-->
@@ -48,7 +48,7 @@
             <!--<div v-if="scope.row.add!=undefined&&scope.row.add" style="display: inline-block;">-->
             <!--&lt;!&ndash; 保存 &ndash;&gt;-->
             <!--<el-button-->
-            <!--size="mini"-->
+            <!--size="small"-->
             <!--type="success"-->
             <!--:plain="true"-->
             <!--v-if="scope.row.edit"-->
@@ -57,7 +57,7 @@
             <!--</div>-->
             <!--&lt;!&ndash; 全局控制删除 &ndash;&gt;-->
             <!--<el-button-->
-            <!--size="mini"-->
+            <!--size="small"-->
             <!--v-if="is_delete&&scope.row.add==undefined"-->
             <!--:plain="true"-->
             <!--type="danger"-->
@@ -93,13 +93,11 @@
 
             //编辑
             handleEdit(index, row) {
-                console.log(index, row);
                 row.edit = true;
             },
             //删除
             handleDelete(index, row) {
-                console.log(index, row);
-
+                console.log(row)
                 this.table_data.splice(index, 1);
 
                 this.$message({
@@ -109,7 +107,6 @@
             },
             //保存
             handleSave(index, row) {
-                console.log(index, row);
                 row.edit = false;
 
                 delete this.table_data[index].add;
@@ -166,6 +163,24 @@
                         city: "普陀区",
                         address: "上海市普陀区金沙江路 1518 弄",
                         zip: 200333
+                    },
+                    {
+                        date: "2016-05-04",
+                        name: "王小虎",
+                        sex: 18,
+                        province: "上海",
+                        city: "普陀区",
+                        address: "上海市普陀区金沙江路 1518 弄",
+                        zip: 200333
+                    },
+                    {
+                        date: "2016-05-04",
+                        name: "王小虎",
+                        sex: 18,
+                        province: "上海",
+                        city: "普陀区",
+                        address: "上海市普陀区金沙江路 1518 弄",
+                        zip: 200333
                     }
                 ];
 
@@ -181,7 +196,6 @@
                         this.initAddDataJson(dataArray[0]);
                     }
                 }
-                console.log("this.tableData:", this.table_data);
             },
             initAddDataJson(dataArray) {
                 //新增时，初始化数据结构

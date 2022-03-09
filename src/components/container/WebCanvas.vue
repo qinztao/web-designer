@@ -18,6 +18,8 @@
                 {{ item.content }}
             </el-tab-pane>
         </el-tabs>
+
+        <p>{{executeOperate}}</p>
     </div>
 
 </template>
@@ -27,6 +29,7 @@
         name: "WebCanvas",
         data() {
             return {
+                executeOperate:'',
                 state: 0,
                 cursor: '',
                 editableTabsValue: 'B',
@@ -45,10 +48,16 @@
             }
         },
         methods: {
+
             removeTab() {
 
             }
+        },
+
+        created(){
+            this.$shape.shape
         }
+
 
     }
 </script>

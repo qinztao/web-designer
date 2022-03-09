@@ -1,25 +1,27 @@
 <template>
     <el-container>
         <el-header>
-            <web-menu></web-menu>
-            <web-toolbar></web-toolbar>
+            <web-menu ref="menu"></web-menu>
+            <web-toolbar ref="toolbar"></web-toolbar>
         </el-header>
         <el-container>
-            <el-aside width="200px">
-                <web-management></web-management>
-
+            <el-aside :width="managementWidth+ 'px'">
+                <web-management ref="management"></web-management>
             </el-aside>
+            <drag-divider direction="vertical" v-model:width="managementWidth" :min="managementMinWidth"></drag-divider>
             <el-container>
                 <el-container>
                     <el-main>
                         <web-canvas ref="canvas"></web-canvas>
                     </el-main>
-                    <el-aside width="300px" style="position: relative">
-                        <web-property-panel></web-property-panel>
+                    <drag-divider direction="vertical" v-model:width="propertyWidth" :min="propertyMinWidth" position="right"></drag-divider>
+                    <el-aside :width="propertyWidth + 'px'">
+                        <web-property-panel ref="propertyPanel"></web-property-panel>
                     </el-aside>
                 </el-container>
-                <el-footer class="infoFooter">
-                    <web-info-model></web-info-model>
+                <drag-divider  v-model:height="infoModelHeight" :min="infoModelMinHeight"></drag-divider>
+                <el-footer class="infoFooter" :height="infoModelHeight + 'px'">
+                    <web-info-model ref="infoModel"></web-info-model>
                 </el-footer>
             </el-container>
 
@@ -39,6 +41,8 @@
     import WebInfoModel from './infoModel/WebInfoModel.vue'
     import WebStatusBar from './statusbar/WebStatusBar.vue'
 
+    import DragDivider from '@/components/container/utils/DragDivider.vue'
+
     export default {
         name: "WebContainer",
         components: {
@@ -48,13 +52,41 @@
             WebPropertyPanel,
             WebInfoModel,
             WebToolbar,
-            WebStatusBar
+            WebStatusBar,
+            DragDivider
+        }, data(){
+            return {
+                managementWidth:300,
+                managementMinWidth:120,
+                infoModelHeight:140,
+                infoModelMinHeight:40,
+                propertyWidth:300,
+                propertyMinWidth:10,
+            }
+        },
+        methods:{
+            menuHandle:function(item){
+                console.log('WebContainer', item)
+            }
+        },
+
+        created(){
+            this.$shape.shape.WebContainer = this.$.type.methods
         }
     }
 </script>
 
 
 <style scoped>
+
+    .dropVerticalDivider{
+        height: auto;
+        cursor:e-resize;
+    }
+    .dropHorizontalDivider{
+        cursor:n-resize;
+        margin:1px 0px;
+    }
     .el-container {
         height: 100%;
     }
@@ -64,7 +96,6 @@
     }
 
     .infoFooter {
-        height: 140px !important;
         border: 1px solid;
     }
 

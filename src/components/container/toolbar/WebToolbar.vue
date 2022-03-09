@@ -25,21 +25,21 @@
 
     export default {
         name: "WebToolbar",
-        components:{
+        components: {
             WebFontFamily,
             WebFontSize
         },
         data() {
             return {
                 toolbars: [
-                    {id:1,name: '项目图纸新建', title: '项目图纸新建', type: 'image', image: btnNew},
-                    {id:2,name: '项目图纸保存', title: '项目图纸保存', type: 'image', image: btn_Save},
-                    {id:3,name: '保存所有图纸', title: '保存所有图纸', type: 'image', image: btn_saveAll},
-                    {id:4,name: '项目错误检测', title: '项目错误检测', type: 'image', image: project_bug},
-                    {id:5,name: '拓扑', title: '拓扑', type: 'image', image: icon_topu},
-                    {id:6,name: '建模入库', title: '建模入库', type: 'image', image: btn_model_24},
-                    {id:7,name: '字体', title: '字体', type: 'select' ,key:'WebFontFamily'},
-                    {id:8,name: '字号', title: '字号', type: 'select',key:'WebFontSize'},
+                    {id: 1, name: '项目图纸新建', title: '项目图纸新建', type: 'image', image: btnNew},
+                    {id: 2, name: '项目图纸保存', title: '项目图纸保存', type: 'image', image: btn_Save},
+                    {id: 3, name: '保存所有图纸', title: '保存所有图纸', type: 'image', image: btn_saveAll},
+                    {id: 4, name: '项目错误检测', title: '项目错误检测', type: 'image', image: project_bug},
+                    {id: 5, name: '拓扑', title: '拓扑', type: 'image', image: icon_topu},
+                    {id: 6, name: '建模入库', title: '建模入库', type: 'image', image: btn_model_24},
+                    {id: 7, name: '字体', title: '字体', type: 'select', key: 'WebFontFamily'},
+                    {id: 8, name: '字号', title: '字号', type: 'select', key: 'WebFontSize'},
 
                 ]
             }
@@ -52,11 +52,12 @@
         text-align: left;
         padding: 1px;
     }
-    .list-group-item{
+
+    .list-group-item {
         padding: 0;
         cursor: pointer;
         margin-right: 0.25rem;
-        border-style:none;
+        border-style: none;
 
     }
 </style>

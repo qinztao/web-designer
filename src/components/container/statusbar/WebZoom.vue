@@ -28,14 +28,14 @@
 </script>
 
 <style >
-    .zoom{
-        padding: 1px;
-    }
-    .el-slider__button-wrapper{
-        width: 20px;
-        height: 20px;
-        top: -7px;
-    }
+    /*.zoom{*/
+        /*padding: 1px;*/
+    /*}*/
+    /*.el-slider__button-wrapper{*/
+        /*width: 20px;*/
+        /*height: 20px;*/
+        /*top: -7px;*/
+    /*}*/
 
 </style>
 <!--<el-space direction>-->
