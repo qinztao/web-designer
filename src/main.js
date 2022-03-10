@@ -12,20 +12,43 @@ import './assets/css/bootstrap.css'
 import WebDhape from './components/WebShare'
 
 
-const store1 = createStore({
+const store = createStore({
     state() {
-        return {count: 0}
+
+        return {
+            todos: [
+                {id: 1, text: '...', done: true},
+                {id: 2, text: '...', done: false}
+            ],
+            count:0
+        }
     },
-    mutations:{
-        increment(state){
+    mutations: {
+        increment(state, ccc ) {
             state.count++
+            console.log(ccc)
+        }
+    },
+
+    actions:{
+        increment (context, ccc){
+            console.log(ccc)
+            context.commit('increment')
+        }
+    },
+    getters:{
+        doneTodos(state){
+            return state.todos.filter(todo => todo.done)
+        },
+        getTodoById: (state) => (id) => {
+            return state.todos.find(todo => todo.id === id)
         }
     }
 })
 
 const app = createApp(App)
 app.use(ElementPlus)
-app.use(store1)
+app.use(store)
 
 app.config.globalProperties.$shape = WebDhape
 

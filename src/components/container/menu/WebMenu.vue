@@ -48,6 +48,9 @@
 </template>
 
 <script>
+
+    import {mapGetters } from 'vuex'
+
     export default {
         name: "WebMenu",
         props: {
@@ -236,14 +239,34 @@
         },
         methods: {
             handleSelect(index) {
-                this.$shape.shape.WebContainer.menuHandle(this.menuItems[index])
-                this.$store.commit('increment')
-                console.log( this.$store.state.count)
+
+                this.$shape.shape.menuHandle(this.menuItems[index])
+                // this.$shape.shape.action(this.menuItems[index])
+                this.$store.dispatch('increment')
+                console.log( index)
+                // console.log(this.doneTodos)
+                // console.log(this.getTodoById(2))
+
             },
+
+            outputMethod(value){
+                console.log(value)
+            }
+
+
+        },
+        computed:{
+            ...mapGetters([
+                'doneTodos',
+                'getTodoById'
+            ])
         }
         ,created() {
 
-            this.$shape.shape.WebMenu = this.$.type.methods
+            this.$shape.shape.outputMethod(this, 'changeValue', this.outputMethod)
+
+
+            this.$shape.shape[this.$.type.name] = this
 
             console.log(this)
             let menuItems = {}

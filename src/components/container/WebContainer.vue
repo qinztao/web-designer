@@ -59,19 +59,19 @@
                 managementWidth:300,
                 managementMinWidth:120,
                 infoModelHeight:140,
-                infoModelMinHeight:40,
+                infoModelMinHeight:42,
                 propertyWidth:300,
                 propertyMinWidth:10,
             }
         },
         methods:{
             menuHandle:function(item){
-                console.log('WebContainer', item)
-            }
+                console.log(this, item)
+            },
         },
 
         created(){
-            this.$shape.shape.WebContainer = this.$.type.methods
+            this.$shape.shape[this.$.type.name] = this
         }
     }
 </script>
