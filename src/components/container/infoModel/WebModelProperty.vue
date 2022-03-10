@@ -1,7 +1,7 @@
 <template>
     <div class="model-property">
         <div class="model-main">
-            <web-model-table></web-model-table>
+            <web-model-table :columns="columns" :dataTable="tableData"></web-model-table>
         </div>
         <div class="model-footer">
             <el-form ref="formRef" :inline="true" size="small">
@@ -55,13 +55,22 @@
 <script>
 
     import WebModelTable from './WebModelTable.vue'
+
     export default {
         name: "WebModelProperty",
-        components:{
+        components: {
             WebModelTable
         },
         data() {
             return {
+                columns: [
+                    {field: 'resourceId', label: '资源ID'},
+                    {field: 'shapeData.ENDBTable', label: '设备类型'},
+                    {field: 'shapeData.ZHDBTable', label: '设备名称'}
+                ],
+
+                currentTabName:'',
+                tableData: [],
                 shapeSelected: false,
                 rows: 1,
                 showLine: true,
@@ -123,7 +132,7 @@
             },
 
             refresh() {
-
+                this.tableData = this.$shape.shape.pullData('getShapeDatas', this.currentTabName)
             },
             settings() {
                 if (!this.currentDevice) {
@@ -136,21 +145,22 @@
 
             eidtPanelshapeSelected(value) {
                 this.shapeSelected = value
-            }
+            },
 
+            acceptDataHandle(args) {
+                console.log(args)
+                this.eidtPanelshapeSelected(args[1] == null)
+            },
+
+            setTableData(args) {
+                this.tableData = args[1]
+            }
         },
 
+        created() {
+            this.$shape.shape.acceptData(this, 'setSelectedShape', this.acceptDataHandle)
+            this.$shape.shape.acceptData(this, 'setDeviceModelData', this.setTableData)
 
-        callback:{
-            eidtPanelshapeSelected(value){
-                console.log(this)
-                console.log(value)
-            }
-        },
-
-        created(){
-            this.$shape.shape[this.$.type.name] = this.$.type.methods
-            this.$shape.shape[this.$.type.name].callback = this.$.type.callback
         }
     }
 </script>

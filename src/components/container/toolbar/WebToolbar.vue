@@ -12,7 +12,7 @@
 </template>
 
 <script>
-
+    import '@/assets/css/bootstrap.css'
     import btnNew from '@/assets/images/btn_New.png'
     import btn_model_24 from '@/assets/images/btn_model_24.png'
     import btn_Save from '@/assets/images/btn_Save.png'

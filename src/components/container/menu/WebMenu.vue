@@ -240,10 +240,14 @@
         methods: {
             handleSelect(index) {
 
-                this.$shape.shape.menuHandle(this.menuItems[index])
+                if(this.menuItems[index].name == 'newGraph'){
+                    this.$shape.shape.dispatch('createGraphic', this.menuItems[index])
+                }
+
+
                 // this.$shape.shape.action(this.menuItems[index])
-                this.$store.dispatch('increment')
-                console.log( index)
+                // this.$store.dispatch('changeValue', this.menuItems[index])
+                console.log(index)
                 // console.log(this.doneTodos)
                 // console.log(this.getTodoById(2))
 
@@ -263,12 +267,6 @@
         }
         ,created() {
 
-            this.$shape.shape.outputMethod(this, 'changeValue', this.outputMethod)
-
-
-            this.$shape.shape[this.$.type.name] = this
-
-            console.log(this)
             let menuItems = {}
 
             this.menus.forEach((item)=>{

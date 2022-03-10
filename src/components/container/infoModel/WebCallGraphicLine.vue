@@ -1,7 +1,7 @@
 <template>
     <div class="model-property">
         <div class="model-main">
-            <web-model-table></web-model-table>
+            <web-model-table :columns="columns" :dataTable="tableData"></web-model-table>
         </div>
         <div class="model-footer">
             <el-form ref="formRef" :inline="true" size="small">
@@ -25,7 +25,12 @@
         },
         data(){
             return {
-                rows:1
+                rows:1,
+                columns: [
+
+                ],
+
+                tableData: [],
             }
         },
         methods:{

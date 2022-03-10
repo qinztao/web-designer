@@ -71,7 +71,10 @@
         },
 
         created(){
-            this.$shape.shape[this.$.type.name] = this
+
+
+
+            // this.$shape.shape[this.$.type.name] = this
         }
     }
 </script>

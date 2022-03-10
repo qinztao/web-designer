@@ -5,6 +5,7 @@
                 type="card"
                 closable
                 @tab-remove="removeTab"
+                @tab-click="tabClick"
         >
             <el-tab-pane
                     v-for="item in editableTabs"
@@ -12,50 +13,81 @@
                     :label="item.title"
                     :name="item.name"
             >
-                <!--<template #label>-->
-                    <!--<span class="tabTitle">{{item.title}}</span>-->
-                <!--</template>-->
-                {{ item.content }}
+                <component :is="item.content" :ref="item.name"></component>
             </el-tab-pane>
         </el-tabs>
 
-        <p>{{executeOperate}}</p>
     </div>
 
 </template>
 
 <script>
+
+    import WebInput from '@/components/container/WebShapeInputMethod.vue'
+    import WebOutput from '@/components/container/WebShapeOutputMethod.vue'
+
     export default {
         name: "WebCanvas",
+        components:{
+            WebInput,
+            WebOutput
+        },
         data() {
             return {
                 executeOperate:'',
                 state: 0,
                 cursor: '',
                 editableTabsValue: 'B',
+                tabIndex:1,
                 editableTabs: [
                     {
                         title: 'Tab 1',
                         name: 'A',
-                        content: 'Tab 1 content',
+                        content: 'WebInput',
                     },
                     {
                         title: 'Tab 2',
                         name: 'B',
-                        content: 'Tab 2 content',
+                        content: 'WebOutput',
                     },
                 ]
+
             }
         },
         methods: {
 
-            removeTab() {
+            addTab(){
+                this.editableTabs.push({
+                    title:'新建图纸' + this.tabIndex,
+                    name:'新建图纸' + this.tabIndex,
+                    content: 'WebInput',
+                })
+            },
 
+            tabClick(label){
+                console.log(label.props.name)
+
+                let shapeDatas = this.$refs[label.props.name][0].getShapeDatas()
+                this.$shape.shape.dispatch('setDeviceModelData', shapeDatas)
+
+                // let divDom= document.createElement('div')
+                // divDom.addEventListener('click', function(evt){
+                //    console.log(evt.target)
+                // })
+            },
+
+            removeTab(){
+
+            },
+
+            getShapeDatas(args){
+                console.log(args)
             }
         },
 
         created(){
-            this.$shape.shape
+            this.$shape.shape.acceptData(this, 'createGraphic', this.addTab)
+            this.$shape.shape.outData(this, 'getShapeDatas', this.getShapeDatas)
         }
 
 
@@ -82,4 +114,9 @@
         height: 30px !important;
         line-height: 30px !important;
     }
+
+    .canvasConstainer .el-tabs__content{
+        height: calc(100% - 46px);
+    }
+
 </style>
