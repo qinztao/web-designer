@@ -10,7 +10,7 @@
 </template>
 
 <script>
-
+    import { mapMutations } from 'vuex'
     export default {
 
         name: "WebShapeOutputMethod",
@@ -18,6 +18,7 @@
             return {
                 activeIndex: '0',
                 tempData: null,
+                currentRow:null,
                 columns: [
                     {field: 'resourceId', label: '资源ID'},
                     {field: 'shapeData.ENDBTable', label:'设备类型' },
@@ -25,17 +26,22 @@
             }
         },
         methods: {
-
+            ...mapMutations({selectedShape:'setCurrentShape'}),
             cellClick(row) {
-                this.$shape.shape.dispatch('setSelectedShape', row)
+                this.currentRow = row
+                this.selectedShape({currentShape:row})
             },
 
             cleanSelectedShape(){
-                this.$shape.shape.dispatch('setSelectedShape')
+
             },
 
             getShapeDatas(){
                 return this.tempData.shapeArray
+            },
+
+            getSelectedShape(){
+                return this.currentRow
             },
 
             setTempData(data) {
@@ -43,8 +49,7 @@
             }
         },
         created() {
-            console.log(this.$tempData)
-            this.setTempData(this.$tempData)
+            this.tempData = this.$tempData
         }
     }
 </script>

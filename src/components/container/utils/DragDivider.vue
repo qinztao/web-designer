@@ -94,8 +94,10 @@
                         }
                     }
                     if(this.drag.isdrag){
+
                         if(this.direction === 'horizontal'){
                             let count = (this.drag.startY - event[this.prefixY])
+                            console.log(count)
                             if(!this.min){
                                 if(this.originalHeight >= count){
                                     this.cHeight = this.originalHeight

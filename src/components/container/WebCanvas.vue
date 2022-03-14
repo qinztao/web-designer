@@ -16,7 +16,6 @@
                 <component :is="item.content" :ref="item.name"></component>
             </el-tab-pane>
         </el-tabs>
-
     </div>
 
 </template>
@@ -67,17 +66,15 @@
             tabClick(label){
                 console.log(label.props.name)
 
-                let shapeDatas = this.$refs[label.props.name][0].getShapeDatas()
-                this.$shape.shape.dispatch('setDeviceModelData', shapeDatas)
 
-                // let divDom= document.createElement('div')
-                // divDom.addEventListener('click', function(evt){
-                //    console.log(evt.target)
-                // })
             },
 
             removeTab(){
 
+            },
+
+            saveGraphic(args){
+                console.log(args)
             },
 
             getShapeDatas(args){
@@ -86,8 +83,9 @@
         },
 
         created(){
-            this.$shape.shape.acceptData(this, 'createGraphic', this.addTab)
-            this.$shape.shape.outData(this, 'getShapeDatas', this.getShapeDatas)
+            this.$store.dispatch('register', {
+                el:this,type: 'saveGraphic', method:this.saveGraphic
+            })
         }
 
 

@@ -240,16 +240,10 @@
         methods: {
             handleSelect(index) {
 
-                if(this.menuItems[index].name == 'newGraph'){
-                    this.$shape.shape.dispatch('createGraphic', this.menuItems[index])
-                }
+                console.log(this.menuItems[index])
 
+                this.$store.getters.saveGraphic(this.menuItems[index])
 
-                // this.$shape.shape.action(this.menuItems[index])
-                // this.$store.dispatch('changeValue', this.menuItems[index])
-                console.log(index)
-                // console.log(this.doneTodos)
-                // console.log(this.getTodoById(2))
 
             },
 

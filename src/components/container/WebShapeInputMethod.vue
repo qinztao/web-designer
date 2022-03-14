@@ -12,34 +12,53 @@
                 </el-form-item>
 
             </el-form>
+
         </div>
+
+        <p>{{currentToolbarStatus}}</p>
+
 </template>
 
 <script>
+
+    import { mapState } from 'vuex'
     export default {
 
         name: "WebShapeInputMethod",
 
         data() {
             return {
-                currentDevice: null
             }
         },
+        computed:mapState({
+            currentDevice:'currentShape',
+            currentToolbarStatus:'currentToolbarStatus'
+        }),
         methods: {
 
             getShapeDatas(){
                 return []
             },
+
+            getSelectedShape(){
+                return this.currentDevice
+            },
+
             setActiveDevice(device) {
                 this.currentDevice = device
             },
             acceptDataHandle(args){
                 console.log(args)
-                this.setActiveDevice(args[1])
+                this.setActiveDevice(args)
+            }
+        },
+
+        watch:{
+            currentToolbarStatus(newValue, oldValue){
+                console.log(newValue, oldValue)
             }
         },
         created() {
-            this.$shape.shape.acceptData(this, 'setSelectedShape', this.acceptDataHandle)
         }
 
     }

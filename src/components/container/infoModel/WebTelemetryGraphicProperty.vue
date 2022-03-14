@@ -52,7 +52,7 @@
 </template>
 
 <script>
-    import WebModelTable from './WebModelTable.vue'
+    import WebModelTable from '../utils/WebModelTable.vue'
 
     export default {
         name: "WebTelemetryGraphicProperty",

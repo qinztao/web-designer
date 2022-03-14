@@ -14,12 +14,13 @@
                     <el-main>
                         <web-canvas ref="canvas"></web-canvas>
                     </el-main>
-                    <drag-divider direction="vertical" v-model:width="propertyWidth" :min="propertyMinWidth" position="right"></drag-divider>
-                    <el-aside :width="propertyWidth + 'px'">
+                    <drag-divider direction="vertical" v-model:width="propertyWidth" :min="propertyMinWidth"
+                                  position="right"></drag-divider>
+                    <el-aside :width="propertyWidth + 'px' ">
                         <web-property-panel ref="propertyPanel"></web-property-panel>
                     </el-aside>
                 </el-container>
-                <drag-divider  v-model:height="infoModelHeight" :min="infoModelMinHeight"></drag-divider>
+                <drag-divider v-model:height="infoModelHeight" :min="infoModelMinHeight"></drag-divider>
                 <el-footer class="infoFooter" :height="infoModelHeight + 'px'">
                     <web-info-model ref="infoModel"></web-info-model>
                 </el-footer>
@@ -54,27 +55,25 @@
             WebToolbar,
             WebStatusBar,
             DragDivider
-        }, data(){
+        }, data() {
             return {
-                managementWidth:300,
-                managementMinWidth:120,
-                infoModelHeight:140,
-                infoModelMinHeight:42,
-                propertyWidth:300,
-                propertyMinWidth:10,
+                managementWidth: 300,
+                managementMinWidth: 120,
+                infoModelHeight: 140,
+                infoModelMinHeight: 42,
+                propertyWidth: 300,
+                propertyMinWidth: 10,
             }
         },
-        methods:{
-            menuHandle:function(item){
+        methods: {
+            menuHandle: function (item) {
                 console.log(this, item)
             },
         },
 
-        created(){
+        created() {
 
 
-
-            // this.$shape.shape[this.$.type.name] = this
         }
     }
 </script>
@@ -82,14 +81,16 @@
 
 <style scoped>
 
-    .dropVerticalDivider{
+    .dropVerticalDivider {
         height: auto;
-        cursor:e-resize;
+        cursor: e-resize;
     }
-    .dropHorizontalDivider{
-        cursor:n-resize;
-        margin:1px 0px;
+
+    .dropHorizontalDivider {
+        cursor: n-resize;
+        margin: 1px 0px;
     }
+
     .el-container {
         height: 100%;
     }

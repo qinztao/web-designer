@@ -54,7 +54,8 @@
 
 <script>
 
-    import WebModelTable from './WebModelTable.vue'
+    import WebModelTable from '../utils/WebModelTable.vue'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: "WebModelProperty",
@@ -69,7 +70,7 @@
                     {field: 'shapeData.ZHDBTable', label: '设备名称'}
                 ],
 
-                currentTabName:'',
+                currentTabName: '',
                 tableData: [],
                 shapeSelected: false,
                 rows: 1,
@@ -100,6 +101,13 @@
                 ]
             }
         },
+
+        computed: {
+            // 当成属性调用
+            ...mapGetters(['getAllShapes']
+            )
+        },
+
         methods: {
             selectedDevice(value) {
                 this.cleanSelectValue()
@@ -132,7 +140,7 @@
             },
 
             refresh() {
-                this.tableData = this.$shape.shape.pullData('getShapeDatas', this.currentTabName)
+                this.tableData = this.getAllShapes
             },
             settings() {
                 if (!this.currentDevice) {
@@ -153,14 +161,11 @@
             },
 
             setTableData(args) {
-                this.tableData = args[1]
+                this.tableData = args
             }
         },
 
         created() {
-            this.$shape.shape.acceptData(this, 'setSelectedShape', this.acceptDataHandle)
-            this.$shape.shape.acceptData(this, 'setDeviceModelData', this.setTableData)
-
         }
     }
 </script>
