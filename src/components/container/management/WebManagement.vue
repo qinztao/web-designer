@@ -1,25 +1,9 @@
 <template>
     <el-collapse accordion ref="collapse">
 
-        <!--<el-collapse-item v-for="item in collapseItems" :key="item.key">-->
-
-        <!--<template #title>-->
-        <!--<div class="collapseTitle" @click="collapseItemchange" :name="item.key"> {{item.title}}</div>-->
-        <!--</template>-->
-        <!--<div class="collapseContent">-->
-        <!--Consistent with real life: in line with the process and logic of real-->
-        <!--life, and comply with languages and habits that the users are used to;-->
-        <!--</div>-->
-
-        <!--&lt;!&ndash;<template #>&ndash;&gt;-->
-        <!--&lt;!&ndash;<component :is="item.cName"></component>&ndash;&gt;-->
-        <!--&lt;!&ndash;</template>&ndash;&gt;-->
-
-        <!--</el-collapse-item>-->
-
         <el-collapse-item name="1">
             <template #title>
-                <div class="collapseTitle" @click="collapseItemchange" name="1">工作项目</div>
+                <div class="collapseTitle" @click="_collapseItemchange" name="1">工作项目</div>
             </template>
             <div class="itemConstainer">
                 Consistent with real life: in line with the process and logic of real
@@ -28,11 +12,11 @@
         </el-collapse-item>
         <el-collapse-item name="2">
             <template #title>
-                <div class="collapseTitle" @click="collapseItemchange" name="2">遥信/遥测</div>
+                <div class="collapseTitle" @click="_collapseItemchange" name="2">遥信/遥测</div>
             </template>
             <div class="itemConstainer" >
-                <web-graphic-shape-item :shapeItems="shapeItems" @cilckItem="cilckItem" @dragItem="dragItem"
-                                        :callback="telemetryCallbackHandle">
+                <web-graphic-shape-item :shapeItems="shapeItems" @cilckItem="_cilckItem" @dragItem="dragItem"
+                                        :callback="_callBackTelemetryCallbackHandle">
                     <template #="{ content }">
                         {{content.name}}
                     </template>
@@ -41,11 +25,11 @@
         </el-collapse-item>
         <el-collapse-item name="3">
             <template #title>
-                <div class="collapseTitle" @click="collapseItemchange" name="3">电网模型</div>
+                <div class="collapseTitle" @click="_collapseItemchange" name="3">电网模型</div>
             </template>
             <div class="itemConstainer">
-                <web-graphic-shape-item :shapeItems="shapeItems" @cilckItem="cilckItem" @dragItem="dragItem"
-                                        :callback="powerCallbackHandle">
+                <web-graphic-shape-item :shapeItems="shapeItems" @cilckItem="_cilckItem" @dragItem="dragItem"
+                                        :callback="_callBackPowerCallbackHandle">
                     <template #="{ content }">
                         {{content.name}}
                     </template>
@@ -54,10 +38,10 @@
         </el-collapse-item>
         <el-collapse-item name="4">
             <template #title>
-                <div class="collapseTitle" @click="collapseItemchange" name="4">图标库(辅助绘图)</div>
+                <div class="collapseTitle" @click="_collapseItemchange" name="4">图标库(辅助绘图)</div>
             </template>
             <div class="itemConstainer">
-                <web-graphic-shape-item :shapeItems="shapeItems" @cilckItem="cilckItem" @dragItem="dragItem" :callback="iconCallbackHandle"
+                <web-graphic-shape-item :shapeItems="shapeItems" @cilckItem="_cilckItem" @dragItem="dragItem" :callback="_callBackIconCallbackHandle"
                                         >
                     <template #="{ content }">
                         {{content.name}}
@@ -66,7 +50,6 @@
             </div>
         </el-collapse-item>
     </el-collapse>
-    <!--<web-font-family @valueChange="valueChange"></web-font-family>-->
 </template>
 
 <script>
@@ -170,20 +153,76 @@
         },
 
         props: {
+            //
+            // collapseItems: {
+            //     type: Array,
+            //     required: false,
+            //     default() {
+            //         return [
+            //             {title: '工作项目', key: '1', cName: 'WebFontFamily'},
+            //             {title: '遥信/遥测', key: '2', cName: 'WebFontSize'},
+            //             {title: '电网模型', key: '3', cName: 'WebFontFamily'},
+            //             {title: '图标库(辅助绘图)', key: '4', cName: 'WebFontSize'},
+            //         ]
+            //     }
+            // }
 
-            collapseItems: {
-                type: Array,
-                required: false,
-                default() {
-                    return [
-                        {title: '工作项目', key: '1', cName: 'WebFontFamily'},
-                        {title: '遥信/遥测', key: '2', cName: 'WebFontSize'},
-                        {title: '电网模型', key: '3', cName: 'WebFontFamily'},
-                        {title: '图标库(辅助绘图)', key: '4', cName: 'WebFontSize'},
-                    ]
+        },
+
+
+        methods: {
+            _collapseItemchange() {
+                // console.log(event)
+                // let name = event.target.getAttribute('name');
+                // if (name === this.currentName) {
+                //     event.stopPropagation()
+                // } else {
+                //     this.currentName = name
+                // }
+            },
+
+            _callBackPowerCallbackHandle(item) {
+                console.log(item)
+                if (item.type == 101) {
+                    return -1
+                }else if(item.type == 102){
+                    return 1
                 }
-            }
+                return 0
 
+            },
+            _callBackTelemetryCallbackHandle(item) {
+                console.log(item)
+
+                if (item.type == 101) {
+                    return -1
+                }else if(item.type == 102){
+                    return 1
+                }
+                return 0
+
+            },
+            _callBackIconCallbackHandle(item) {
+
+                console.log(item)
+                if (item.type == 101) {
+                    return -1
+                }else if(item.type == 102){
+                    return 1
+                }
+                return 0
+
+            },
+            _cilckItem(item) {
+                console.log(item)
+                if (item.type == 101) {
+                    return true
+                }
+                return false
+            },
+            dragItem(item) {
+                console.log(item)
+            }
         },
         mounted(){
             let collapseEl = this.$refs.collapse.$el
@@ -195,7 +234,6 @@
             for(let ch of children){
                 countHeight += ch.getBoundingClientRect().height
             }
-            console.log(box, children, countHeight)
             let height = box.height - countHeight - 50
             //
             try {
@@ -212,46 +250,6 @@
 
 
         },
-
-        methods: {
-            collapseItemchange() {
-                // console.log(event)
-                // let name = event.target.getAttribute('name');
-                // if (name === this.currentName) {
-                //     event.stopPropagation()
-                // } else {
-                //     this.currentName = name
-                // }
-            },
-            valueChange(value) {
-                console.log(value)
-            },
-
-            powerCallbackHandle(item) {
-                console.log(item)
-                if (item.type == 101) {
-                    return true
-                }
-                return false
-
-            },
-            telemetryCallbackHandle(item) {
-                console.log(item)
-            },
-            iconCallbackHandle(item) {
-                console.log(item)
-            },
-            cilckItem(item) {
-                console.log(item)
-                if (item.type == 101) {
-                    return true
-                }
-                return false
-            },
-            dragItem(item) {
-                console.log(item)
-            }
-        }
     }
 </script>
 

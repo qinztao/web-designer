@@ -1,6 +1,6 @@
 <template>
     <el-row class="toolbarConstainer">
-        <el-check-tag @change="onChange($event, index)" v-for="(tool, index) in operateToolbars" :key="index" size="small"
+        <el-check-tag @change="_onChange($event, index)" v-for="(tool, index) in operateToolbars" :key="index" size="small"
                       effect="plain" :class=" tool.name == '-' ? 'spaceLine': ''" :checked="index == currentIdex">
 
                 <template #>
@@ -76,13 +76,12 @@
             return {
                 currentIdex: 10,
                 operateToolbars:this.toolbars
-
             }
         },
         methods: {
 
             // ...mapMutations(['setCurrentToolbarStatus', 'setDrawStatus']),
-            onChange(checked, index) {
+            _onChange(checked, index) {
                 let toolbar = this.toolbars[index]
                 this.currentIdex = index
                 // this.setCurrentToolbarStatus({toolbarStatus: toolbar})
@@ -108,7 +107,9 @@
                 this.$emit('clickhandle', toolbar)
             },
 
-            reset(index){
+
+
+            setIndex(index){
                 this.currentIdex = index
             }
         }
@@ -127,6 +128,7 @@
 
     .toolbarConstainer .el-check-tag {
         height: 20px;
+        line-height:20px;
         margin-right: 3px;
         padding: 3px 3px;
         font-size: 12px;

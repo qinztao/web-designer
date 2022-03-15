@@ -4,8 +4,8 @@
                 v-model="currentGraphic"
                 type="card"
                 closable
-                @tab-remove="removeTab"
-                @tab-click="tabClick"
+                @tab-remove="_removeTab"
+                @tab-click="_tabClick"
         >
             <el-tab-pane
                     v-for="item in editableTabs"
@@ -31,6 +31,27 @@
             WebInput,
             WebOutput
         },
+        emits:['selectedGraphic'],
+        props:{
+            graphicArray:{
+                type:Array,
+                default(){
+                    return [
+                        {
+                            title: 'Tab 1',
+                            name: 'A',
+                            content: 'WebInput',
+                        },
+                        {
+                            title: 'Tab 2',
+                            name: 'B',
+                            content: 'WebOutput',
+                        },
+                    ]
+                }
+            }
+        },
+
         data() {
             return {
                 executeOperate: '',
@@ -38,18 +59,7 @@
                 cursor: '',
                 currentGraphic: '',
                 tabIndex: 1,
-                editableTabs: [
-                    {
-                        title: 'Tab 1',
-                        name: 'A',
-                        content: 'WebInput',
-                    },
-                    {
-                        title: 'Tab 2',
-                        name: 'B',
-                        content: 'WebOutput',
-                    },
-                ]
+                editableTabs:this.graphicArray
 
             }
         },
@@ -71,12 +81,12 @@
                 })
             },
 
-            tabClick(label) {
+            _tabClick(label) {
                 console.log(label.props.name)
                 this.$emit('selectedGraphic', this.currentGraphic)
             },
 
-            removeTab(targetName) {
+            _removeTab(targetName) {
 
                 const tabs = this.editableTabs
                 let activeName = this.currentGraphic

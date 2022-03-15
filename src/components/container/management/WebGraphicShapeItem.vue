@@ -1,5 +1,5 @@
 <template>
-    <div class="shapeItem"  @mousedown="mousedown(index)" @mouseup="mouseup" v-for="(shape, index) in shapeItems"   :class="activeIndex == index ?'active': ''" :key="index">
+    <div class="shapeItem"  @mousedown="_mousedown(index)" @mouseup="_mouseup" v-for="(shape, index) in shapeItems"   :class="activeIndex == index ?'active': ''" :key="index">
         <slot v-bind:content="shape">
             {{shape.name}}
         </slot>
@@ -8,9 +8,9 @@
 
 <script>
     export default {
+
         name: "WebGraphicShapeItem",
         emits:['cilckItem','dragItem'],
-
         props:{
             shapeItems:{
                 type:Array,
@@ -33,28 +33,33 @@
         },
 
         methods:{
-            mousedown(index){
+            _mousedown(index){
+
                 console.log(index)
 
                let item = this.shapeItems[index]
 
                 this.activeIndex = index
                 let result = this.callback(item)
-
+                if(result === 101){
+                    console.log('选中母线')
+                }else if(result === 102){
+                    console.log('选中断路器')
+                }
                 // let callbackValue = this.$emit('cilckItem', item)
                 console.log('result',result)
                 this.activeName  = item.name
 
             },
 
-            mouseup(event){
+            _mouseup(event){
                 console.log('mouseup', event)
             },
 
-            click(){
+            _click(){
 
             },
-            dragItem(){
+            _dragItem(){
 
             }
         }

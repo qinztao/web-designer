@@ -35,8 +35,7 @@
             }
         },
         created(){
-            // let height = this.$refs.propertyMain.getBoundingClientRect().height
-            console.log('1')
+
         }
     }
 </script>

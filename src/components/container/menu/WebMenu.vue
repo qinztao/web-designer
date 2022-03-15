@@ -2,7 +2,7 @@
 
     <el-menu
             mode="horizontal"
-            @select="clickHandle">
+            @select="_clickHandle">
         <el-sub-menu :index="m.id+ ''" v-for="m in menus" :key="m.id">
             <template #title> {{m.desc}}</template>
             <template v-for="subItem in m.children" :key="m.id+'-'+subItem.id">
@@ -52,6 +52,7 @@
 
     export default {
         name: "WebMenu",
+        emits:['clickhandle'],
         props: {
             menus: {
                 type: Array,
@@ -157,8 +158,8 @@
                                 {id: 4, name: 'compileGrapihcProperties', desc: '拷贝', icon: ''},
                                 {id: 5, name: 'compileGrapihcProperties', desc: '粘贴', icon: ''},
                                 {id: 6, name: '-'},
-                                {id: 7, name: 'compileGrapihcProperties', desc: '删除', icon: ''},
-                                {id: 9, name: 'compileGrapihcProperties', desc: '格式刷', icon: ''},
+                                {id: 7, name: 'delete', desc: '删除', icon: ''},
+                                {id: 9, name: 'formatPainter', desc: '格式刷', icon: ''},
                                 {id: 10, name: 'compileGrapihcProperties', desc: '向左旋转90度', icon: ''},
                                 {id: 11, name: 'compileGrapihcProperties', desc: '向右旋转90度', icon: ''},
                                 {id: 12, name: 'compileGrapihcProperties', desc: '向左翻转', icon: ''},
@@ -170,8 +171,8 @@
                             id: 7, name: 'arrangeBar', desc: '排列栏', children: [
                                 {id: 1, name: 'Undo', desc: '左对齐', icon: ''},
                                 {id: 2, name: 'Redo', desc: '右对齐', icon: ''},
-                                {id: 3, name: 'compileGrapihcProperties', desc: '上对齐', icon: ''},
-                                {id: 4, name: 'compileGrapihcProperties', desc: '下对齐', icon: ''},
+                                {id: 3, name: 'upAlignment', desc: '上对齐', icon: ''},
+                                {id: 4, name: 'bottomAlignment', desc: '下对齐', icon: ''},
                                 {id: 5, name: 'compileGrapihcProperties', desc: '横向居中对齐', icon: ''},
                                 {id: 7, name: 'compileGrapihcProperties', desc: '纵向居中对齐', icon: ''},
                                 {id: 9, name: 'compileGrapihcProperties', desc: '成组', icon: ''},
@@ -232,19 +233,14 @@
         },
         data() {
             return {
-                activeIndex: '1',
                 menuItems:{},
             }
         },
         methods: {
 
-            clickHandle(index) {
-
-                console.log(this.menuItems[index])
+            _clickHandle(index) {
                 this.$emit('clickhandle',this.menuItems[index])
             },
-
-
 
         },
         // computed:{

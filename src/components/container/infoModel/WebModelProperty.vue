@@ -10,7 +10,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-checkbox label="选中模式" :checked="selectedMode" v-model="selectedMode"
-                                 @change="selectedModeHandle"></el-checkbox>
+                                 @change="_selectedModeHandle"></el-checkbox>
                 </el-form-item>
                 <el-form-item label="模型库">
                     <el-select model-value="PG">
@@ -19,28 +19,28 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="设备类型">
-                    <el-select :model-value="currentDevice" @change="selectedDevice">
+                    <el-select :model-value="currentDevice" @change="_selectedDevice">
                         <el-option v-for="device in deviceTypes" :label="device.name" :value="device.type"
                                    :key="device.type"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="电压等级">
-                    <el-select :model-value="currentVoltageLevel" @change="selectedVoltage" :disabled="isClean">
+                    <el-select :model-value="currentVoltageLevel" @change="_selectedVoltage" :disabled="isClean">
                         <el-option v-for="voltage in voltageLevels" :label="voltage.name" :value="voltage.value"
                                    :key="voltage.value"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="厂站">
-                    <el-select :model-value="currentSubstation" @change="selectedSubstation" :disabled="isClean">
+                    <el-select :model-value="currentSubstation" @change="_selectedSubstation" :disabled="isClean">
                         <el-option v-for="subs in substations" :label="subs.name" :value="subs.value"
                                    :key="subs.value"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="settings">设置</el-button>
+                    <el-button @click="_settings">设置</el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="refresh">刷新</el-button>
+                    <el-button @click="_refresh">刷新</el-button>
                 </el-form-item>
                 <el-form-item>
                     <div>行:{{rows}}</div>
@@ -121,22 +121,23 @@
         },
 
         methods: {
-            selectedDevice(value) {
-                this.cleanSelectValue()
+
+            _selectedDevice(value) {
+                this._cleanSelectValue()
                 this.currentDevice = value
             },
-            selectedVoltage(value) {
+            _selectedVoltage(value) {
                 this.currentVoltageLevel = value
             },
-            selectedSubstation(value) {
+            _selectedSubstation(value) {
                 this.currentSubstation = value
             },
 
 
-            selectedModeHandle(value) {
+            _selectedModeHandle(value) {
                 if (value) {
                     if (this.shapeSelected == false) {
-                        this.cleanSelectValue()
+                        this._cleanSelectValue()
                         this.isClean = true
                     }
                 } else {
@@ -144,17 +145,17 @@
                 }
             },
 
-            cleanSelectValue() {
+            _cleanSelectValue() {
 
                 this.currentVoltageLevel = ''
                 this.currentSubstation = ''
                 this.currentDevice = ''
             },
 
-            refresh() {
+            _refresh() {
                 // this.tableData = this.getAllShapes
             },
-            settings() {
+            _settings() {
                 if (!this.currentDevice) {
                     this.$message({
                         message: "请选择有效的设备类型！",

@@ -6,7 +6,7 @@
         <div class="model-footer">
             <el-form ref="formRef" :inline="true" size="small">
                 <el-form-item>
-                    <el-button @click="refresh">刷新</el-button>
+                    <el-button @click="_refresh">刷新</el-button>
                 </el-form-item>
                 <el-form-item>
                     <div>行:{{rows}}</div>
@@ -34,7 +34,7 @@
             }
         },
         methods:{
-            refresh(){
+            _refresh(){
                 console.log('刷新')
             },
         }
