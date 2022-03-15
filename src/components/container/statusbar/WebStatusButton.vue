@@ -1,8 +1,8 @@
 <template>
     <div class="statusBtn">
 
-        <el-checkbox-group v-model="checkboxValue" size="small" style="display:;">
-            <el-checkbox-button v-for="city in statusBtns" :key="city" :label="city">
+        <el-checkbox-group v-model="checkboxValue"  size="small" style="display:;">
+            <el-checkbox-button v-for="city in statusBtns" :key="city" :label="city" @change="_clickHandle($event, city)">
                 <template #>
                     <div class="statusbtnGroup" v-bind:style="{ backgroundImage: 'url('+ btns[city].img +')'}"></div>
                 </template>
@@ -62,6 +62,8 @@
                     'standardRuler': {img: BarRuler}
                 },
 
+                currentValue:[],
+
                 spacingValue: '1',
                 spacings: [{
                     value: 1,
@@ -117,10 +119,11 @@
             }
         },
         methods:{
-            clickHandle(){
-
+            _clickHandle(value, tag){
+                console.log(value, tag)
             }
-        }
+        },
+
     }
 
 </script>
