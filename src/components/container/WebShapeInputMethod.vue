@@ -36,8 +36,8 @@
         }),
         methods: {
 
-            getShapeDatas(){
-                return []
+            getAllShapeDatas(){
+                return [this.currentDevice]
             },
 
             getSelectedShape(){

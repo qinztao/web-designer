@@ -3,7 +3,7 @@
         <el-table :data="tempData.shapeArray" border style="width: 100%" height="700"  size="small" highlight-current-row
                   @cell-click="cellClick" @click.stop>
             <el-table-column v-for="column in columns" :prop="column.field" :label="column.label"
-                             :key="column.field" width="120" sortable>
+                             :key="column.field" width="120" sortable :filter-method="filterTag">
             </el-table-column>
         </el-table>
     </div>
@@ -35,8 +35,10 @@
             cleanSelectedShape(){
 
             },
-
-            getShapeDatas(){
+            filterTag(){
+                console.log(arguments)
+            },
+            getAllShapeDatas(){
                 return this.tempData.shapeArray
             },
 

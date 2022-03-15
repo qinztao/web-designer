@@ -2,8 +2,7 @@
 
     <el-menu
             mode="horizontal"
-            @select="handleSelect">
-
+            @select="clickHandle">
         <el-sub-menu :index="m.id+ ''" v-for="m in menus" :key="m.id">
             <template #title> {{m.desc}}</template>
             <template v-for="subItem in m.children" :key="m.id+'-'+subItem.id">
@@ -49,7 +48,7 @@
 
 <script>
 
-    import {mapGetters } from 'vuex'
+    // import {mapGetters } from 'vuex'
 
     export default {
         name: "WebMenu",
@@ -238,28 +237,23 @@
             }
         },
         methods: {
-            handleSelect(index) {
+
+            clickHandle(index) {
 
                 console.log(this.menuItems[index])
-
-                this.$store.getters.saveGraphic(this.menuItems[index])
-
-
+                this.$emit('clickhandle',this.menuItems[index])
             },
 
-            outputMethod(value){
-                console.log(value)
-            }
 
 
         },
-        computed:{
-            ...mapGetters([
-                'doneTodos',
-                'getTodoById'
-            ])
-        }
-        ,created() {
+        // computed:{
+        //     ...mapGetters([
+        //         'doneTodos',
+        //         'getTodoById'
+        //     ])
+        // }
+        created() {
 
             let menuItems = {}
 

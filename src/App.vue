@@ -1,5 +1,5 @@
 <template>
-    <web-container  @onselectstart="onselectstart"></web-container>
+    <web-container ></web-container>
 </template>
 
 <script>
@@ -10,7 +10,10 @@
         components: {
             WebContainer,
         }, methods: {
-            onselectstart() {
+
+        },
+        created(){
+            document.onselectstart = function(){
                 return false
             }
         }

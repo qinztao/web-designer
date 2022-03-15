@@ -1,7 +1,7 @@
 <template>
     <div class="canvasConstainer">
         <el-tabs
-                v-model="editableTabsValue"
+                v-model="currentGraphic"
                 type="card"
                 closable
                 @tab-remove="removeTab"
@@ -27,17 +27,17 @@
 
     export default {
         name: "WebCanvas",
-        components:{
+        components: {
             WebInput,
             WebOutput
         },
         data() {
             return {
-                executeOperate:'',
+                executeOperate: '',
                 state: 0,
                 cursor: '',
-                editableTabsValue: 'B',
-                tabIndex:1,
+                currentGraphic: '',
+                tabIndex: 1,
                 editableTabs: [
                     {
                         title: 'Tab 1',
@@ -54,40 +54,69 @@
             }
         },
         methods: {
-
-            addTab(){
+            addGraphic() {
                 this.editableTabs.push({
-                    title:'新建图纸' + this.tabIndex,
-                    name:'新建图纸' + this.tabIndex,
+                    title: '新建图纸' + this.tabIndex,
+                    name: '新建图纸' + this.tabIndex,
+                    content: 'WebInput',
+                })
+                this.tabIndex++
+            },
+
+            openGraphic(graphicInfo) {
+                this.editableTabs.push({
+                    title: graphicInfo.title,
+                    name: graphicInfo.name,
                     content: 'WebInput',
                 })
             },
 
-            tabClick(label){
+            tabClick(label) {
                 console.log(label.props.name)
+                this.$emit('selectedGraphic', this.currentGraphic)
+            },
 
+            removeTab(targetName) {
+
+                const tabs = this.editableTabs
+                let activeName = this.currentGraphic
+                if (activeName === targetName) {
+                    tabs.forEach((tab, index) => {
+                        if (tab.name === targetName) {
+                            const nextTab = tabs[index + 1] || tabs[index - 1]
+                            if (nextTab) {
+                                activeName = nextTab.name
+                            }
+                        }
+                    })
+                }
+
+                this.currentGraphic = activeName
+                this.editableTabs = tabs.filter((tab) => tab.name !== targetName)
 
             },
 
-            removeTab(){
+            getAllShapes(graphicName) {
 
-            },
-
-            saveGraphic(args){
-                console.log(args)
-            },
-
-            getShapeDatas(args){
-                console.log(args)
+                if (this.$refs[graphicName] != null) {
+                   return this.$refs[graphicName][0].getAllShapeDatas()
+                }
             }
+
+            // saveGraphic(args){
+            //     console.log(args)
+            // },
+            //
+            // getShapeDatas(args){
+            //     console.log(args)
+            // }
         },
 
-        created(){
-            this.$store.dispatch('register', {
-                el:this,type: 'saveGraphic', method:this.saveGraphic
-            })
+        created() {
+            //     this.$store.dispatch('register', {
+            //         el:this,type: 'saveGraphic', method:this.saveGraphic
+            //     })
         }
-
 
     }
 </script>
@@ -102,18 +131,18 @@
         height: 100%;
     }
 
-    .title{
+    .title {
         display: inline-block;
         height: 30px !important;
         line-height: 30px;
     }
 
-    .el-tabs__item{
+    .el-tabs__item {
         height: 30px !important;
         line-height: 30px !important;
     }
 
-    .canvasConstainer .el-tabs__content{
+    .canvasConstainer .el-tabs__content {
         height: calc(100% - 46px);
     }
 

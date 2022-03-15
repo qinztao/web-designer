@@ -5,7 +5,8 @@ export default {
         allShapes:[],
         currentToolbarStatus:null,
         drawStatus:false,
-        currentMenu:null
+        currentMenu:null,
+        currentGraphValue:'',
 
     },
     mutations: {
@@ -20,39 +21,38 @@ export default {
         setDrawStatus(state, payload){
             state.drawStatus = payload.drawStatus
             console.log(state)
+        },
+        setCurrentGraphValue(state, payload){
+            state.currentGraphValue = payload.graphValue
+        },
+        setAllShapes(state, payload){
+            state.allShapes = payload.allShapes
         }
+
 
     },
 
     actions: {
 
         register(state, scope){
-
-
             let method = function () {
                 return scope.method.apply(scope.el, arguments)
             }
 
             state.getters[scope.type] = method
+        },
 
+        setAllShapes(state, payload){
+            state.commit('setAllShapes', payload)
         }
 
-
-        // increment(context) {
-        //     context.commit('dispatch')
-        // }
     },
+
     getters: {
 
         getAllShapes: (state)=> {
-
-
-
             return state.allShapes
         }
-        // getTodoById: (state) => (id) => {
-        //     return state.todos.find(todo => todo.id === id)
-        // }
 
     }
 }

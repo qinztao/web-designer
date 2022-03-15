@@ -1,30 +1,19 @@
 <template>
     <el-row class="toolbarConstainer">
-        <!--<el-button v-for="tool in toolbars" :key="tool.id" size="small"  effect="plain" :class=" tool.name == '-' ? 'spaceLine': ''" checked="true">-->
-        <!--<template #>-->
-        <!--<img :src="tool.image" :title="tool.title" v-if="tool.type == 'image'"/>-->
-        <!--<component v-else-if="tool.type == 'select'" :is="tool.key"></component>-->
-        <!--</template>-->
-        <!--</el-button>-->
-        <el-check-tag @change="onChange($event, index)" v-for="(tool, index) in toolbars" :key="tool.id" size="small"
+        <el-check-tag @change="onChange($event, index)" v-for="(tool, index) in operateToolbars" :key="index" size="small"
                       effect="plain" :class=" tool.name == '-' ? 'spaceLine': ''" :checked="index == currentIdex">
-            <template #>
-                <img :src="tool.image" :title="tool.title" v-if="tool.type == 'image'"/>
-                <component v-else-if="tool.type == 'select'" :is="tool.key" :ref="tool.name"></component>
-            </template>
+
+                <template #>
+                    <slot v-bind:tool="tool"> </slot>
+                </template>
+
+
+            <!--<template #>-->
+                <!--<img :src="tool.image" :title="tool.title" v-if="tool.type == 'image'"/>-->
+                <!--<component v-else-if="tool.type == 'select'" :is="tool.key" :ref="tool.name"></component>-->
+            <!--</template>-->
         </el-check-tag>
-        <!---->
-
     </el-row>
-    <!--<div class="toolbarConstainer">-->
-    <!--<ul class="list-group list-group-horizontal">-->
-    <!--<li class="list-group-item" v-for="tool in toolbars" :key="tool.id">-->
-    <!--<img :src="tool.image" :title="tool.name" v-if="tool.type == 'image'"/>-->
-    <!--<component v-else-if="tool.type == 'select'" :is="tool.key"></component>-->
-    <!--</li>-->
-    <!--</ul>-->
-
-    <!--</div>-->
 
 </template>
 
@@ -43,71 +32,84 @@
     import ele_curve from '@/assets/images/toolbar/ele_curve.png'
     import ele_circle from '@/assets/images/toolbar/ele_circle.png'
 
-
-    import WebFontFamily from './WebFontFamily.vue'
-    import WebFontSize from './WebFontSize.vue'
-    import {mapMutations} from 'vuex'
+    // import WebFontFamily from './WebFontFamily.vue'
+    // import WebFontSize from './WebFontSize.vue'
 
     export default {
         name: "WebToolbar",
-        components: {
-            WebFontFamily,
-            WebFontSize
+        // components: {
+        //     WebFontFamily,
+        //     WebFontSize
+        // },
+
+        props:{
+            toolbars:{
+                type:Array,
+                required:true,
+
+                default(){
+                    return [
+                        {id: 1, name: 'newGraphic', title: '项目图纸新建', type: 'image', image: btnNew},
+                        {id: 2, name: 'saveGraphic', title: '项目图纸保存', type: 'image', image: btn_Save},
+                        {id: 3, name: 'saveAllGraphic', title: '保存所有图纸', type: 'image', image: btn_saveAll},
+                        {id: 4, name: 'errorDetection', title: '项目错误检测', type: 'image', image: project_bug},
+                        {id: 5, name: 'generateTopology', title: '拓扑', type: 'image', image: icon_topu},
+                        {id: 6, name: 'modelingLibrary', title: '建模入库', type: 'image', image: btn_model_24},
+                        {id: 7, name: '-'},
+                        {id: 9, name: 'font', title: '字体', type: 'select', key: 'WebFontFamily'},
+                        {id: 10, name: 'fontSize', title: '字号', type: 'select', key: 'WebFontSize'},
+                        {id: 19, name: '-'},
+                        {id: 11, name: 'none', title: '选择', type: 'image', image: ele_none},
+                        {id: 12, name: 'line', title: '直线', type: 'image', image: ele_line},
+                        {id: 13, name: 'polyline', title: '多段线', type: 'image', image: ele_overline},
+                        {id: 14, name: 'arc', title: '弧线', type: 'image', image: ele_curve},
+                        {id: 16, name: 'rectangle', title: '矩形', type: 'image', image: ele_tangle},
+                        {id: 17, name: 'circle', title: '圆', type: 'image', image: ele_circle},
+                        {id: 18, name: 'characters', title: '文字', type: 'image', image: ele_text},
+
+                    ]
+                }
+            }
         },
+
         data() {
             return {
                 currentIdex: 10,
-                toolbars: [
-                    {id: 1, name: 'newGraphic', title: '项目图纸新建', type: 'image', image: btnNew},
-                    {id: 2, name: 'saveGraphic', title: '项目图纸保存', type: 'image', image: btn_Save},
-                    {id: 3, name: 'saveAllGraphic', title: '保存所有图纸', type: 'image', image: btn_saveAll},
-                    {id: 4, name: 'errorDetection', title: '项目错误检测', type: 'image', image: project_bug},
-                    {id: 5, name: 'generateTopology', title: '拓扑', type: 'image', image: icon_topu},
-                    {id: 6, name: 'modelingLibrary', title: '建模入库', type: 'image', image: btn_model_24},
-                    {id: 7, name: '-'},
-                    {id: 9, name: 'font', title: '字体', type: 'select', key: 'WebFontFamily'},
-                    {id: 10, name: 'fontSize', title: '字号', type: 'select', key: 'WebFontSize'},
-                    {id: 19, name: '-'},
-                    {id: 11, name: 'none', title: '选择', type: 'image', image: ele_none},
-                    {id: 12, name: 'line', title: '直线', type: 'image', image: ele_line},
-                    {id: 13, name: 'polyline', title: '多段线', type: 'image', image: ele_overline},
-                    {id: 14, name: 'arc', title: '弧线', type: 'image', image: ele_curve},
-                    {id: 16, name: 'rectangle', title: '矩形', type: 'image', image: ele_tangle},
-                    {id: 17, name: 'circle', title: '圆', type: 'image', image: ele_circle},
-                    {id: 18, name: 'characters', title: '文字', type: 'image', image: ele_text},
+                operateToolbars:this.toolbars
 
-                ]
             }
         },
         methods: {
 
-            ...mapMutations(['setCurrentToolbarStatus', 'setDrawStatus']),
+            // ...mapMutations(['setCurrentToolbarStatus', 'setDrawStatus']),
             onChange(checked, index) {
                 let toolbar = this.toolbars[index]
                 this.currentIdex = index
-                this.setCurrentToolbarStatus({toolbarStatus: toolbar})
+                // this.setCurrentToolbarStatus({toolbarStatus: toolbar})
 
 
+                // switch (index) {
+                //     case 10:{
+                //         this.setDrawStatus({drawStatus:false})
+                //         break
+                //     }
+                //     case 11:
+                //     case 12:
+                //     case 13:
+                //     case 14:
+                //     case 16:
+                //     {
+                //         this.setDrawStatus({drawStatus:true})
+                //         break
+                //     }
+                //
+                // }
 
-                switch (index) {
-                    case 10:{
-                        this.setDrawStatus({drawStatus:false})
-                        break
-                    }
-                    case 11:
-                    case 12:
-                    case 13:
-                    case 14:
-                    case 16:
-                    {
-                        this.setDrawStatus({drawStatus:true})
-                        break
-                    }
+                this.$emit('clickhandle', toolbar)
+            },
 
-
-
-                }
-
+            reset(index){
+                this.currentIdex = index
             }
         }
     }

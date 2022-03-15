@@ -55,7 +55,7 @@
 <script>
 
     import WebModelTable from '../utils/WebModelTable.vue'
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapState} from 'vuex'
 
     export default {
         name: "WebModelProperty",
@@ -71,7 +71,7 @@
                 ],
 
                 currentTabName: '',
-                tableData: [],
+                // tableData: [],
                 shapeSelected: false,
                 rows: 1,
                 showLine: true,
@@ -98,14 +98,26 @@
                 substations: [
                     {name: '', value: ''},
                     {name: '220kV琴湖变', value: '220kV琴湖变'}
-                ]
+                ],
+                currentGraphic:this. currentGraphValue
             }
+
         },
 
         computed: {
             // 当成属性调用
             ...mapGetters(['getAllShapes']
-            )
+            ),
+            ...mapState({
+                currentGraphValue: 'currentGraphValue',
+                tableData:'allShapes'
+            }),
+        },
+
+        watch:{
+            currentGraphic(){
+                this.this.getAllShapes
+            }
         },
 
         methods: {
@@ -140,7 +152,7 @@
             },
 
             refresh() {
-                this.tableData = this.getAllShapes
+                // this.tableData = this.getAllShapes
             },
             settings() {
                 if (!this.currentDevice) {
@@ -160,9 +172,6 @@
                 this.eidtPanelshapeSelected(args[1] == null)
             },
 
-            setTableData(args) {
-                this.tableData = args
-            }
         },
 
         created() {
